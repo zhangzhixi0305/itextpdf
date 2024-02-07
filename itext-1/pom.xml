@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.zhixi</groupId>
+    <artifactId>itext-1</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-parent</artifactId>
+        <version>2.7.0</version>
+    </parent>
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+
+        <!-- 始终需要 -->
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>kernel</artifactId>
+            <version>7.0.3</version>
+        </dependency>
+        <!-- 始终需要 -->
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>io</artifactId>
+            <version>7.0.3</version>
+        </dependency>
+        <!-- 始终需要 -->
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>layout</artifactId>
+            <version>7.0.3</version>
+        </dependency>
+        <!-- 仅在需要表单功能时需要 -->
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>forms</artifactId>
+            <version>7.0.3</version>
+        </dependency>
+        <!-- 仅在需要PDF/A格式支持时需要 -->
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>pdfa</artifactId>
+            <version>7.0.3</version>
+        </dependency>
+        <!-- 仅在需要数字签名功能时需要 -->
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>sign</artifactId>
+            <version>7.0.3</version>
+        </dependency>
+        <!-- 仅在需要条形码功能时需要 -->
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>barcodes</artifactId>
+            <version>7.0.3</version>
+        </dependency>
+        <!-- 仅在需要亚洲字体支持时需要 -->
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>font-asian</artifactId>
+            <version>7.0.3</version>
+        </dependency>
+        <!-- 仅在需要断字功能时需要 -->
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>hyph</artifactId>
+            <version>7.0.3</version>
+        </dependency>
+
+    </dependencies>
+
+</project>
