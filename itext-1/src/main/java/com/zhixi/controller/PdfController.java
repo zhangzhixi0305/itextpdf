@@ -1,13 +1,16 @@
 package com.zhixi.controller;
 
-import com.zhixi.service.PdfGenerationService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Paragraph;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Files;
@@ -17,23 +20,17 @@ import java.nio.file.Paths;
 @RequestMapping("/pdf")
 public class PdfController {
 
-    private PdfGenerationService pdfGenerationService;
-
-    @Autowired
-    public void setPdfGenerationService(PdfGenerationService pdfGenerationService) {
-        this.pdfGenerationService = pdfGenerationService;
-    }
-
-
     @GetMapping("/download")
     public void downloadPdf(HttpServletResponse response) throws IOException {
         String fileName = "example.pdf";
         String filePath = "results/chapter01/" + fileName;
 
         // 1、生成pdf
-        pdfGenerationService.generatePdf(filePath);
+        generatePdf(filePath);
         // 2、发送响应（下载pdf）
         sendPdfResponse(response, fileName, filePath);
+        // 3、删除pdf
+        Files.delete(Paths.get(filePath));
     }
 
     private void sendPdfResponse(HttpServletResponse response, String fileName, String filePath) throws IOException {
@@ -49,5 +46,19 @@ public class PdfController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 生成pdf（Service层）
+     *
+     * @param filePath pdf文件路径
+     * @throws FileNotFoundException 文件未找到异常
+     */
+    public void generatePdf(String filePath) throws FileNotFoundException {
+        PdfWriter writer = new PdfWriter(filePath);
+        PdfDocument pdf = new PdfDocument(writer);
+        Document document = new Document(pdf);
+        document.add(new Paragraph("Hello, World!"));
+        document.close();
     }
 }
