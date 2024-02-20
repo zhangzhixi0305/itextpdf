@@ -21,23 +21,51 @@ import java.nio.file.Paths;
 public class PdfController {
 
     @GetMapping("/download")
-    public void downloadPdf(HttpServletResponse response) throws IOException {
+    public void downloadPdfDownload(HttpServletResponse response) throws IOException {
         String fileName = "example.pdf";
         String filePath = "results/chapter01/" + fileName;
 
         // 1、生成pdf
         generatePdf(filePath);
         // 2、发送响应（下载pdf）
-        sendPdfResponse(response, fileName, filePath);
+        sendPdfResponseDownload(response, fileName, filePath);
         // 3、删除pdf
         Files.delete(Paths.get(filePath));
     }
 
-    private void sendPdfResponse(HttpServletResponse response, String fileName, String filePath) throws IOException {
+    @GetMapping("/preview")
+    public void downloadPdfPreview(HttpServletResponse response) throws IOException {
+        String fileName = "example.pdf";
+        String filePath = "results/chapter01/" + fileName;
+
+        // 1、生成pdf
+        generatePdf(filePath);
+        // 2、发送响应（预览pdf）
+        sendPdfResponsePreview(response, fileName, filePath);
+        // 3、删除pdf
+        Files.delete(Paths.get(filePath));
+    }
+
+    private void sendPdfResponseDownload(HttpServletResponse response, String fileName, String filePath) throws IOException {
         // 2.1、设置响应头
         File file = new File(filePath);
         response.setContentType("application/pdf");
         response.setHeader("Content-Disposition", "attachment; filename=" + fileName);
+        response.setContentLength((int) file.length());
+
+        // 2.2、将pdf文件写入响应输出流
+        try (OutputStream out = response.getOutputStream()) {
+            Files.copy(Paths.get(filePath), out);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void sendPdfResponsePreview(HttpServletResponse response, String fileName, String filePath) throws IOException {
+        // 2.1、设置响应头
+        File file = new File(filePath);
+        response.setContentType("application/pdf");
+        response.setHeader("Content-Disposition", "inline; filename=" + fileName);
         response.setContentLength((int) file.length());
 
         // 2.2、将pdf文件写入响应输出流
